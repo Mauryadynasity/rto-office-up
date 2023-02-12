@@ -21,9 +21,10 @@ class ApplicationController extends Controller {
 
 	public function index(Request $request) {
 		// dd($request->all());
+			$admin = Auth::guard('admin')->user();
 		if ($request->ajax()) {
-			$admin = Application::where('deleted_at', null)->get();
-        return Datatables::of($admin)->addIndexColumn()
+			$application = Application::where('deleted_at', null)->get();
+        return Datatables::of($application)->addIndexColumn()
             ->addColumn('action', function($row){
                 $actionBtn = '<a href="'.url("admin/application/".base64_encode($row->id)).'" class="edit btn btn-success btn-sm">Edit</a>
                  <a href="javascript:void(0)" id="'.$row->id.'"  class="delete btn btn-danger btn-sm">Delete</a>

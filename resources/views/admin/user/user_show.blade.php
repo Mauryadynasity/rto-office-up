@@ -74,18 +74,6 @@
                 @endif
                 </div>
                 <div class="col-md-3">
-                  <label for="exampleInputName1">Role</label>
-                  <select id="role" name="role" class="form-control">
-                    <option value="">--Select Role--</option>
-                    <option value="1">1 Means admin</option>
-                    <option value="2">2 Means RTO</option>
-                    <option value="3">3 Means HO</option>
-                  </select>
-                  @if($errors->has('role'))
-                      <span class="text-danger">{{ $errors->first('role') }}</span>
-                  @endif
-                </div>
-                <div class="col-md-3">
                   <label for="exampleInputName1">Status</label>
                       <select id="status" name="status" class="form-control">
                         <option value="active">Active</option>
@@ -97,13 +85,14 @@
                 </div>
                 <div class="col-md-3">
                   <label for="exampleInputName1">Admin Type</label>
-                      <select id="admin-type" name="admin_type" class="form-control" required>
+                      <select id="role" name="role" class="form-control" required>
                         <option value="">--Select Type--</option>
-                        <option value="RTO">RTO</option>
-                        <option value="HO">HO</option>
+                        <option value="1">Admin</option>
+                        <option value="2">RTO</option>
+                        <option value="3">HO</option>
                       </select>
-                @if($errors->has('status'))
-                    <span class="text-danger">{{ $errors->first('status') }}</span>
+                @if($errors->has('role'))
+                    <span class="text-danger">{{ $errors->first('role') }}</span>
                 @endif
                 </div>
                 <div class="col-md-3 districts">
@@ -144,7 +133,6 @@
                     <th>Name</th>
                     <th>Email</th>
                     <th>Role<p>1=Admin, 2=RTO, 3=HO</p></th> 
-                    <th>Admin Type</th>
                     <th>District</th> 
                     <th>Status</th> 
                    <th ><center>Action</center></th>
@@ -179,7 +167,6 @@
             {data: 'name', name: 'name'},
             {data: 'email', name: 'email'},
             {data: 'role', name: 'role'},
-            {data: 'admin_type', name: 'admin_type'},
             {data: 'district.name', name: 'Name'},
             {data: 'status', name: 'status'},
             {
@@ -226,7 +213,6 @@
        var email = $('#email').val();
        var password = $('#password').val();
        var role = $('#role').val();
-       var admin_type = $('#admin-type').val();
        var district_id = $('#districts').val();
        var status = $('#status').val();
        var formData = {
@@ -234,7 +220,6 @@
         email: email,
         password: password,
         role: role,
-        admin_type: admin_type,
         district_id: district_id,
         status: status,
         "_token": "{{ csrf_token() }}"
@@ -270,7 +255,7 @@
 <script type="text/javascript">
   $("document").ready(function(){
         $(".districts").hide();
-        $("#admin-type").change(function() {
+        $("#role").change(function() {
              var type = ($('option:selected', $(this)).text());
              if(type == 'RTO'){
               $(".districts").show();

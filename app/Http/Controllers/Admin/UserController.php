@@ -80,9 +80,11 @@ class UserController extends Controller {
 
 	public function show($id){
 		$data['users']=Admin::where('id',base64_decode($id))->first();
+		$data['districts'] = District::all();
 			return view('admin.user.user_edit', $data);
 	}
 	public function update(Request $request,$id){
+		// dd($request->all());
 		if($request->profile_img){
 			// $request->request->add([
 			// 		'profile_image' => UplaodImages($request->profile_img, 'profile_image'),

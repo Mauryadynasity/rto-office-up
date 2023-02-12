@@ -50,19 +50,37 @@
           <br>
           <div class="form-row ">
             <div class="col-md-2">
-              <b>Mobile</b>
-            </div>
-            <div class="col-md-4">
-              <input type="text" name="mobile" value='{{old("mobile",$users->mobile)}}' class="form-control"> <span class="text-danger"></span> 
-            </div>
-          </div>
-          <br>
-          <div class="form-row ">
-            <div class="col-md-2">
               <b>Role</b>
             </div>
             <div class="col-md-4">
-              <input type="text" name="role" value='{{old("role",$users->role)}}' class="form-control"> <span class="text-danger"></span> 
+                      <select id="role" name="role" class="form-control" required>
+                        <option value="">--Select Type--</option>
+                        <option value="{{$users->role}}"{{$users->role=='1' ? 'selected': ''}}>Admin</option>
+                        <option value="{{$users->role}}" {{$users->role=='2' ? 'selected': ''}}>RTO</option>
+                        <option value="{{$users->role}}" {{$users->role=='3' ? 'selected': ''}}>HO</option>
+                      </select>
+                @if($errors->has('role'))
+                    <span class="text-danger">{{ $errors->first('role') }}</span>
+                @endif
+              <!-- <input type="text" name="role" value='{{old("role",$users->role)}}' class="form-control"> <span class="text-danger"></span>  -->
+            </div>
+          </div>
+          <br>
+          <div class="form-row districts">
+            <div class="col-md-2">
+              <b>Districts</b>
+            </div>
+            <div class="col-md-4">
+                      <select id="districts" name="district_id" class="form-control" required>
+                        <option value="">--Select District--</option>
+                        @foreach($districts as $index => $district)
+                        <option value="{{$district->id}}" {{$users->district_id==$district->id ? 'select': ''}}>{{$district->name}}</option>
+                        @endforeach
+                      </select>
+                @if($errors->has('role'))
+                    <span class="text-danger">{{ $errors->first('role') }}</span>
+                @endif
+              <!-- <input type="text" name="role" value='{{old("role",$users->role)}}' class="form-control"> <span class="text-danger"></span>  -->
             </div>
           </div>
           <br>
@@ -102,5 +120,25 @@
       <img class="modal-content" id="img01">
     </div>
   </div>
-  <script type="text/javascript" charset="utf-8" async defer></script>
+  <script>
+    $("document").ready(function(){
+        // $(".districts").hide();
+         var type = ($('option:selected', $(this)).text());
+             if(type == 'RTO'){
+              $(".districts").show();
+            }
+        $("#role").change(function() {
+             var type = ($('option:selected', $(this)).text());
+             if(type == 'RTO'){
+              $(".districts").show();
+             }else{
+              $(".districts").hide();
+             }
+        });
+        $("#districts").change(function() {
+          var district = $(this).val();
+          $('#email').val('RTO'+district+'@gmail.com');
+        });
+  });
+  </script>
    @endsection

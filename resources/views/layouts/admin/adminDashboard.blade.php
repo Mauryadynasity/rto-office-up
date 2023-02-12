@@ -148,6 +148,21 @@
                      </li>
                   </ul>
                </nav>
+               <nav class="mt-2">
+                  <ul class="nav nav-pills nav-sidebar flex-column menu-active" data-widget="treeview" role="menu" data-accordion="false">
+                     <li class="nav-item has-treeview menu-open">
+                        <ul class="nav nav-treeview">
+                           <li class="nav-item">
+                              <a class="nav-link {{Request::is('admin/application') ? 'active' : ''}}" href="{{url('admin/application')}}">
+                                <i class="fas fa-file-alt" aria-hidden="true"></i>
+                                 <span>All Applications</span>
+                              </a>
+                           </li>
+                           
+                        </ul>
+                     </li>
+                  </ul>
+               </nav>
          @elseif(Auth::guard('admin')->user()->role==2)
                <nav class="mt-2">
                   <ul class="nav nav-pills nav-sidebar flex-column menu-active" data-widget="treeview" role="menu" data-accordion="false">
