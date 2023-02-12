@@ -7,11 +7,17 @@ use App\Http\Requests\Users\LoginRequest;;
 use Illuminate\Http\Request;
 use App\Http\Requests\Users\ChangePassRequest;
 use App\Models\User;
+use App\Models\Admin\District;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller {
 
 	// Function for admin login
+	public function index(Request $request){
+			$data['districts'] = District::all();
+			return view('admin.admin',$data);
+		
+	}
 	public function login(Request $request){
 	
         $credentials = $request->only('email', 'password');

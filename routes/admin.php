@@ -15,9 +15,10 @@ use App\Http\Controllers\Admin;
 |
 */
 
-Route::get('/', function () {
-    return view('admin.admin');
-});
+// Route::get('/', function () {
+//     return view('admin.admin');
+// });
+    Route::get('/', [Admin\LoginController::class,'index']);
     Route::post('login', [Admin\LoginController::class,'login']);
     Route::get('logout', [Admin\LoginController::class,'logout']);
 Route::group(['middleware'=>'admin'], function () {

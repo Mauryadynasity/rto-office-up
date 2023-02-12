@@ -24,6 +24,8 @@
       <link rel="stylesheet" href="{{url('css/OverlayScrollbars.min.css')}}">
       <!-- Theme style -->
       <link rel="stylesheet" href="{{url('css/adminlte.min.css')}}">
+      <link rel="stylesheet" href="/assets/custom-style.css">
+
 	</head>
 	<body>
 		@yield('content')
