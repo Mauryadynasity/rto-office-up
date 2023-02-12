@@ -7,6 +7,7 @@ use App\Http\Requests\Users\LoginRequest;;
 use Illuminate\Http\Request;
 use App\Http\Requests\Users\ChangePassRequest;
 use App\Models\User;
+use App\Admin;
 use App\Models\Admin\District;
 use Illuminate\Support\Facades\Auth;
 
@@ -46,6 +47,17 @@ class LoginController extends Controller {
             User::where('email', $admin->email)->update($data);
            return redirect()->back()->with('message', 'Password changed successfully.');
         }
+    }
+   public function getUserList(Request $request){
+		$adminList = Admin::where('role',$request->admin_type)->get();
+		$txt = '';
+		if($request->admin_type==2){
+			$txt = '<option value="">Select</option>';
+		}
+		foreach($adminList as $admin){
+			$txt .= '<option value="'.$admin->email.'">'.$admin->name.'</option>';
+		}
+		return $txt;
     }
 
 }

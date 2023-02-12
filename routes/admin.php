@@ -21,6 +21,8 @@ use App\Http\Controllers\Admin;
     Route::get('/', [Admin\LoginController::class,'index']);
     Route::post('login', [Admin\LoginController::class,'login']);
     Route::get('logout', [Admin\LoginController::class,'logout']);
+    Route::get('get-user', [Admin\LoginController::class,'getUser'])->name('get-user');
+    Route::get('get-user-list', [Admin\LoginController::class,'getUserList'])->name('get-user-list');
 Route::group(['middleware'=>'admin'], function () {
     Route::get('dashboard', [Admin\UserController::class,'dashboard']);
     Route::resource('user', Admin\UserController::class);

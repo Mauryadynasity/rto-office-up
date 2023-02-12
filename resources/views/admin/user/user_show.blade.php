@@ -278,6 +278,10 @@
               $(".districts").hide();
              }
         });
+        $("#districts").change(function() {
+          var district = $(this).val();
+          $('#email').val('RTO'+district+'@gmail.com');
+        });
   });
 </script>
 

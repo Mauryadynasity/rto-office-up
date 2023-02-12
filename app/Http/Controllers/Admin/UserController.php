@@ -70,7 +70,7 @@ class UserController extends Controller {
             'role' => 'required',
         ]);
 		$request->request->add([
-			'password' => \Hash::make($request->password),
+			'password' => $request->password,
 			// 'profile_image' => UplaodImages($request->profile_img, 'profile_image'),
 		]);
 		$data = Admin::create($request->except(['profile_img']));

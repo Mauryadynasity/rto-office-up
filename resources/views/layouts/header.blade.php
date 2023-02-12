@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="/assets/custom-style.css">
-    <link href="/assets/login.css" rel="stylesheet" />
+<link href="/assets/login.css" rel="stylesheet" />
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -23,17 +23,33 @@
 </head>
 <header>
 <link rel="stylesheet" href="/assets/custom-style.css">
+
+	<div class="col-md-12" style="padding: 0px;background-color: black;color:#fff;">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6"></div>
+				<div class="col-md-6 text-right">
+				<h6>24x7 Transport Helpline : 1800 1800 151</h6>
+				</div>
+			</div>
+		</div>
+	</div>
     <div class="container">
         <div class="row top-header">
-            <div class="col-md-4">
-                <img src="assets/images/logo.png" style="height:100px;" alt="">
+            <div class="col-md-5">
+                <span style="height: 100%;display: block;float: left;">
+					<img src="assets/images/logo-final.png" style="height:100px;" alt="">
+				</span>
+				<span style="height: 100%;display: block;margin-top: 15px;">
+					<span style="font-size: 25px;font-weight: bold;">Transport Department</span>
+					<span style="font-size: 20px;">Government of Uttar Pradesh</span>
+				</span>
             </div>
             <div class="col-md-4">
-                <h5 class="text-info">Electric Vehicle Cell (EVC)</h5>
-                <h6>(Under UP Electric Vehicle Policy-2023)</h6>
+				<span style="font-size: 25px;font-weight: bold;">EV Subsidy Uttar Pradesh</span>
             </div>
-            <div class="col-md-4 text-right">
-                <h4>State Transport Authority, UP</h4>
+            <div class="col-md-3 text-right">
+    			<img src="assets/images/emblem-black.png" style="height:100px;" alt="">
             </div>
         </div>
     </div>
@@ -51,7 +67,7 @@
 			                <a class="nav-link active" href="{{url('status')}}">Application Status</a>
 			            </li>
 			            @if(Auth::user())
-			           <!--  <li class="nav-item">
+			            <li class="nav-item">
 			                <a class="nav-link active" href="{{url('dashboard')}}">Dashboard</a>
 			            </li>
 			            <li class="nav-item">
@@ -59,7 +75,7 @@
 			            </li>
 			            <li class="nav-item">
 			                <a class="nav-link active" href="{{url('application-form')}}">Application</a>
-			            </li> -->
+			            </li>
 			            <li class="nav-item">
 			                <a class="nav-link active" href="{{url('logout')}}">Logout</a>
 			            </li>

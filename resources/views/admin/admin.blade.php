@@ -14,7 +14,8 @@
 			</div>
 			@endif
 	<div class="wrapper">
-        <div class="text-center mt-4 logHead">Login here</div>
+	<div class="container" style="max-width:400px;">
+         <div class="text-center mt-4 logHead">Login here</div>
             <form class="p-3 mt-3" enctype="multipart/form-data" method="POST" id="form-data" action="{{url('/admin/login')}}">
                     @csrf
             <div class="form-field d-flex align-items-center">
@@ -29,15 +30,7 @@
                 @endif
             </div>
             <div class="form-field d-flex align-items-center">
-                <select id="districts" name="district" class="districts">
-                        <option value="">--Select District--</option>
-                        @foreach($districts as $index => $district)
-                        <option class="form-field d-flex align-items-center" value="{{$district->id}}">{{$district->name}}</option>
-                        @endforeach
-                      </select>
-                @if($errors->has('vehicle_number'))
-                    <span class="text-danger">{{ $errors->first('vehicle_number') }}</span>
-                @endif
+                <select id="districts" name="email" class="districts"></select>
             </div>
 
             <div class="form-field d-flex align-items-center">
@@ -53,6 +46,7 @@
         <div class="text-center fs-6">
             <!-- <a href="{{url('forgot-password')}}">Forget password?</a> or <a href="{{url('register')}}">Sign up</a> -->
         </div>
+    </div>
     </div>
     
 </body>
@@ -72,17 +66,60 @@
 </script>
 <script type="text/javascript">
   $("document").ready(function(){
-  	alert('sdf');
+  	// alert('sdf');
         $(".districts").hide();
         $("#admin-type").change(function() {
-             var type = ($('option:selected', $(this)).text());
-             if(type == 'RTO'){
-              $(".districts").show();
-             }else{
-              $(".districts").hide();
-             }
+            getUserList();
         });
+
+
+
+
   });
+
+
+
+function getUserList(){
+    var admin_type = $("#admin-type").val();
+    // alert(admin_type);
+    if(admin_type == 2){
+        $(".districts").show();
+    }else{
+        $(".districts").hide();
+    }
+    $.ajax({
+        type: "GET",
+        url:"{{route('get-user-list')}}",
+        dataType : "text",
+        data: {
+            admin_type : admin_type,
+        },
+        success: function(data) {
+            $(".districts").html(data);
+        }
+    });
+}
+function getUser(){
+    $.ajax({
+            type: 'GET',
+            url:"{{route('get-user')}}",
+            data: {
+               'id': id,
+            },
+            success: function(data) {
+                if (data.status==true) {
+                swal('Content Deleted Successfully!', {icon: "success"});
+                
+                setTimeout(function(){
+                 location.reload();
+                 }, 2500);
+                // window.location.href('admin/static-contents');
+                }
+             
+            }
+          });
+}
+
 </script>
 @endsection
 
