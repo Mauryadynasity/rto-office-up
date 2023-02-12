@@ -9,9 +9,9 @@
                 <div class="card-header alert-success">Scheme 1</div>
                 <div class="card-body text-success">
                   <ul>
+                      <!-- <li>UP Electric Vehicle Policy 2021</li>
                       <li>UP Electric Vehicle Policy 2021</li>
-                      <li>UP Electric Vehicle Policy 2021</li>
-                      <li>UP Electric Vehicle Policy 2021</li>
+                      <li>UP Electric Vehicle Policy 2021</li> -->
                 </ul>
                 <!-- <div class="col-md-12 text-center"><button class="btn btn-success">Appliation Status</button></div> -->
                 </div>
