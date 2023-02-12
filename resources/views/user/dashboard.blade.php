@@ -57,7 +57,7 @@
           <!-- <p class="text-muted mb-1">Full Stack Developer</p> -->
           <!-- <p class="text-muted mb-4">Bay Area, San Francisco, CA</p> -->
           <div class="d-flex justify-content-center mb-2">
-            <input type="file" class="form-control" name="photo">&nbsp;
+            <input type="file" class="form-control" name="photo" accept="image/jpg,image/jpeg">&nbsp;
             <button type="submit" class="btn btn-outline-primary ms-1">Upload</button>
             <!-- <button type="button" class="btn btn-primary">Follow</button>
             <button type="button" class="btn btn-outline-primary ms-1">Message</button> -->

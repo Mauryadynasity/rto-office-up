@@ -55,7 +55,7 @@ class UserController extends Controller
 		}else{
 			return back()->with('error','Invalid Email ID. Please register first');
 		}
-		return response()->json($data);
+		return response()->json($user);
 	}
 
 
@@ -67,26 +67,30 @@ class UserController extends Controller
 			// 'g-recaptcha-response' => 'required|captcha',
 		]);
 
-		if($validator->fails()) {    
-			return back()->withInput($request->input())->withErrors($validator);
+		if($validator->fails()) {
+			return response()->json($validator->messages(), 200);
 		}
-		if($request->otp!='1234'){
-			return back()->with('error','Invalid OTP');
+
+        $otp_details = $request->session()->get('otp_details');
+		if(count($otp_details)==0){
+			return response()->json(['message' => 'Please Send OTP', 'status' => false]);
+		}
+		if($otp_details['otp']!=$request->otp){
+			return response()->json(['message' => 'Invalid OTP', 'status' => false]);
 		}
 
 		$user = New User;
 		$user->full_name = 'Sunil';
-		$user->first_name = 'Sunil';
-        $user->last_name = 'Maurya';
-		$user->user_name = 'SunilMaurya';
+		// $user->first_name = 'Sunil';
+        // $user->last_name = 'Maurya';
+		// $user->user_name = 'SunilMaurya';
 		$user->mobile = '9999999999';
 		$user->vehicle_number = $request->vehicle_number;
 		$user->chassis_number = $request->chassis_number;
 		$user->password = \Hash::make('rto@123');
 		$user->status = 'active';
 		$user->save();
-		return back()->with('success','Register Successful');
-
+		return response()->json(['message' => 'Register Successful', 'status' => true]);
 	}
 
 	public function enqueryLogin(Request $request){
@@ -109,6 +113,30 @@ class UserController extends Controller
         }
 	}
 
+	public function enqueryLoginOtp(Request $request){
+		$validator = Validator::make($request->all(), [
+            'vehicle_number' => 'required',
+            'otp' => 'required',
+			// 'g-recaptcha-response' => 'required|captcha',
+		]);
+
+		if($validator->fails()) {
+			return response()->json($validator->messages(), 200);
+		}
+
+        $user = User::where('vehicle_number',$request->vehicle_number)->first();
+        if(!$user){
+            return response()->json(['message' => 'Please Register First', 'status' => false]);
+        }
+		if($user->otp != $request->otp){
+            return response()->json(['message' => 'Invalid OTP', 'status' => false]);
+		}
+        $user->otp = null;
+        $user->save();
+		Auth::loginUsingId($user->id);
+		return response()->json(['message' => 'Login Successful', 'status' => true]);
+	}
+	
 	public function uploadPhoto(Request $request){
 		$userData = Auth::user();
 		$user = User::find($userData->id);

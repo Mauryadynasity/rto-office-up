@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('full_name', 99);
             $table->string('mobile', 99)->nullable();
+            $table->string('otp', 99)->nullable();
             $table->boolean('is_mobile_verified')->default(0);            
             $table->string('email', 199)->nullable();
             $table->timestamp('email_verified_at')->nullable();

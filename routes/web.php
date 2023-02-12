@@ -20,6 +20,7 @@ Route::get('/', function () {
     Route::get('dashboard', 'App\Http\Controllers\User\UserController@dashboard');
     Route::get('login', 'App\Http\Controllers\User\UserController@login');
     Route::post('enquery-login', 'App\Http\Controllers\User\UserController@enqueryLogin');
+    Route::post('enquery-login-otp', 'App\Http\Controllers\User\UserController@enqueryLoginOtp');
     Route::get('logout', 'App\Http\Controllers\User\UserController@logout');
     Route::get('register', 'App\Http\Controllers\User\UserController@register');
     Route::get('forgot-password', 'App\Http\Controllers\User\UserController@forgotPassword');
@@ -39,3 +40,7 @@ Route::get('/', function () {
     Route::post('save-application-form', 'App\Http\Controllers\User\Application\ApplicationController@saveApplicationForm');
 
 
+// OTR Related Routes
+Route::post('otp-send', 'App\Http\Controllers\User\OtpController@otpSend');
+Route::post('otp-send-login', 'App\Http\Controllers\User\OtpController@otpSendLogin');
+// Route::post('save-application-form', 'App\Http\Controllers\User\Application\ApplicationController@saveApplicationForm');
