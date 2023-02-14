@@ -15,7 +15,7 @@
 			@endif
 	<div class="wrapper">
 	<div class="container" style="max-width:400px;">
-         <div class="text-center mt-4 logHead">Login here</div>
+         <div class="text-center logHead">Login here</div>
             <form class="p-3 mt-3" enctype="multipart/form-data" method="POST" id="form-data" action="{{url('/admin/login')}}">
                     @csrf
             <div class="form-field d-flex align-items-center">
@@ -30,7 +30,7 @@
                 @endif
             </div>
             <div class="form-field d-flex align-items-center">
-                <select id="districts" name="email" class="districts"></select>
+                <select id="districts" name="email" class="districts form-control"></select>
             </div>
 
             <div class="form-field d-flex align-items-center">
