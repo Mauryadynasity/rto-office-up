@@ -24,10 +24,9 @@ class ApplicationController extends Controller
     public function saveApplicationForm(Request $request){
         // dd($request->all());
     	$request->validate([
-            // 'owner_name' => 'required',
-            'application_number' => 'required',
-            'vehical_name' => 'required',
-            'registration_number' => 'required',
+            'scheme_id' => 'required',
+            'application_number' => 'required|unique:application',
+            'vehicle_number' => 'required',
             'chassis_number' => 'required',
             'engine_number' => 'required',
             'fuel_type' => 'required',
@@ -39,7 +38,7 @@ class ApplicationController extends Controller
 				'scheme_id' => $request->scheme_id,
                 'owner_name' => Auth::user()->full_name,
                 'application_number' => $request->application_number,
-                'vehical_name' => $request->vehical_name,
+                'vehical_name' => $request->vehicle_number,
                 'registration_number' => $request->registration_number,
                 'chassis_number' => $request->chassis_number,
                 'engine_number' => $request->engine_number,
@@ -50,5 +49,8 @@ class ApplicationController extends Controller
 		]);
         return redirect(url('application-form'))->with('success','Application added succesfully');
 	}
+    public function destroy($id){
+        Admin::where(['id'=>$id])->delete();
+    }
 }
 

@@ -124,7 +124,7 @@
               <select id="course" name="district_id"  class="form-control" required>
                 <option value="">--Select District--</option>
                 @foreach($districts as $index => $district)
-                <option value="{{$district->id}}">{{$district->name}}</option>
+                <option value="{{$district->id}}" @if($district->id == Auth::user()->district) selected @endif>{{$district->name}}</option>
                 @endforeach
             </select>
             </div>

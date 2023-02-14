@@ -37,7 +37,7 @@ Route::get('/', function () {
 
 // Application form urls
     Route::get('application-form', 'App\Http\Controllers\User\Application\ApplicationController@applicationForm');
-    Route::post('save-application-form', 'App\Http\Controllers\User\Application\ApplicationController@saveApplicationForm');
+    Route::post('save-application-form','App\Http\Controllers\User\Application\ApplicationController@saveApplicationForm');
 
 
 // OTR Related Routes

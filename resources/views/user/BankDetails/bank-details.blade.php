@@ -12,7 +12,7 @@
 </style>
 
 <body>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/"></script>
     <script src="/assets/bootstrap/lib/jquery.js"></script>
     <script src="/assets/bootstrap/js/jquery.dataTables.min.js"></script>
     <script src="/assets/js/bootstrap.min.js"></script>
@@ -31,7 +31,7 @@
         <ul class="form-stepper form-stepper-horizontal text-center mx-auto pl-0">
             <!-- Step 1 -->
             <li class="text-center form-stepper-list form-stepper-completed" step="1">
-                <a class="mx-2">
+                <a href="{{url('dashboard')}}" class="mx-2">
                     <span class="form-stepper-circle">
                         <span>1</span>
                     </span>
@@ -49,7 +49,7 @@
             </li>
             <!-- Step 3 -->
             <li class="form-stepper-unfinished text-center form-stepper-list" step="3">
-                <a class="mx-2">
+                <a href="{{url('application-form')}}" class="mx-2">
                     <span class="form-stepper-circle text-muted">
                         <span>3</span>
                     </span>

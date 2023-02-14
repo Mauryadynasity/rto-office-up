@@ -47,8 +47,7 @@
                     <th>Scheme Name</th>
                     <th>Owner</th>
                     <th>Application Number</th>
-                    <th>Vehical Name</th> 
-                    <th>Registration Number</th> 
+                    <th>Vehicle Number</th> 
                     <th>Chassis Number</th> 
                     <th>Engine Number</th> 
                     <th>Fuel Type</th> 
@@ -88,7 +87,6 @@
             {data: 'owner_name', name: 'owner_name'},
             {data: 'application_number', name: 'application_number'},
             {data: 'vehical_name', name: 'vehical_name'},
-            {data: 'registration_number', name: 'registration_number'},
             {data: 'chassis_number', name: 'chassis_number'},
             {data: 'engine_number', name: 'engine_number'},
             {data: 'fuel_type', name: 'fuel_type'},

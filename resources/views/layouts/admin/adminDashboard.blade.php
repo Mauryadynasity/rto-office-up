@@ -196,7 +196,7 @@
                   </ul>
                </nav>      
          @endif
-               <nav class="mt-2">
+               <!-- <nav class="mt-2">
                   <ul class="nav nav-pills nav-sidebar flex-column menu-active" data-widget="treeview" role="menu" data-accordion="false">
                      <li class="nav-item has-treeview menu-open">
                         <ul class="nav nav-treeview">
@@ -210,7 +210,7 @@
                         </ul>
                      </li>
                   </ul>
-               </nav>
+               </nav> -->
 
                 <nav class="mt-2">
                   <ul class="nav nav-pills nav-sidebar flex-column menu-active" data-widget="treeview" role="menu" data-accordion="false">

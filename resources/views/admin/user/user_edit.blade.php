@@ -74,7 +74,7 @@
                       <select id="districts" name="district_id" class="form-control" required>
                         <option value="">--Select District--</option>
                         @foreach($districts as $index => $district)
-                        <option value="{{$district->id}}" {{$users->district_id==$district->id ? 'select': ''}}>{{$district->name}}</option>
+                        <option value="{{$district->id}}" {{$users->district_id==$district->id ? 'selected': ''}}>{{$district->name}}</option>
                         @endforeach
                       </select>
                 @if($errors->has('role'))

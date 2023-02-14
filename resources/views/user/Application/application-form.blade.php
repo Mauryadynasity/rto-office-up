@@ -2,6 +2,12 @@
 @section('content')
 <html>
 <body>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/"></script>
+    <script src="/assets/bootstrap/lib/jquery.js"></script>
+    <script src="/assets/bootstrap/js/jquery.dataTables.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/custom.js"></script>
+    <script src="/assets/js/jquery.validate.js"></script>
 <div class="container page_content" style="min-height: 500px;padding-top: 30px;padding-bottom: 30px;">
 <!-- profile start -->
 <div class="row">
@@ -13,7 +19,7 @@
         <ul class="form-stepper form-stepper-horizontal text-center mx-auto pl-0">
             <!-- Step 1 -->
             <li class="text-center form-stepper-list form-stepper-completed" step="1">
-                <a class="mx-2">
+                <a href="{{url('dashboard')}}" class="mx-2">
                     <span class="form-stepper-circle">
                         <span>1</span>
                     </span>
@@ -22,7 +28,7 @@
             </li>
             <!-- Step 2 -->
             <li class="text-center form-stepper-list form-stepper-completed" step="2">
-                <a class="mx-2">
+                <a href="{{url('bank-detail')}}" class="mx-2">
                     <span class="form-stepper-circle">
                         <span>2</span>
                     </span>
@@ -32,7 +38,7 @@
             <!-- Step 3 -->
             @if($applications->count()>0)
             <li class="text-center form-stepper-list form-stepper-completed" step="3">
-                <a class="mx-2">
+                <a href="{{url('application-form')}}" class="mx-2">
                     <span class="form-stepper-circle text-muted">
                         <span>3</span>
                     </span>
@@ -41,7 +47,7 @@
             </li>
             @else
              <li class="form-stepper-active text-center form-stepper-list" step="3">
-                <a class="mx-2">
+                <a href="{{url('application-form')}}" class="mx-2">
                     <span class="form-stepper-circle text-muted">
                         <span>3</span>
                     </span>
@@ -56,8 +62,9 @@
 <!-- multi step form end -->
       <div class="card mb-4">
         <div class="card-body">
+            @if($applications->count() ==0)
         <h3 class="mb-3 text-success">Fill Application Details</h3>
-        <form enctype="multipart/form-data" method="POST" id="commentForm2" action="{{url('save-application-form')}}">
+        <form enctype="multipart/form-data" method="POST" id="form-data" action="{{url('save-application-form')}}">
         @csrf
             <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
             <div class="row">
@@ -77,65 +84,52 @@
           <div class="row">
             <div class="col-sm-4">
                 <label class="labels"><strong>Owner Name</strong></label>
-                <input type="text" class="form-control" name="owner_name" readonly disabled="disbled" value="{{ Auth::user()->full_name }}">
-                @if($errors->has('owner_name'))
-                    <span class="text-danger">{{ $errors->first('owner_name') }}</span>
-                @endif
+                <input type="text" class="form-control" name="owner_name" readonly disabled="disbled" value="{{ Auth::user()->full_name }}" required>
+               
             </div>
             <div class="col-sm-4">
                 <label class="labels"><strong>Application Number</strong></label>
-                <input type="text" class="form-control" name="application_number">
-                @if($errors->has('application_number'))
-                    <span class="text-danger">{{ $errors->first('application_number') }}</span>
-                @endif
+                <input type="text" class="form-control disabled" name="application_number" value="{{rand()}}" required> 
             </div>
             <div class="col-sm-4">
-                <label class="labels"><strong>Vehical Name</strong></label>
-                <input type="text" class="form-control" name="vehical_name">
-                @if($errors->has('vehical_name'))
-                    <span class="text-danger">{{ $errors->first('vehical_name') }}</span>
-                @endif
+                <label class="labels"><strong>Vehicle Number</strong></label>
+                <input type="text" class="form-control disabled" name="vehicle_number" value="{{ Auth::user()->vehicle_number}}" required>
+               
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-4">
-                <label class="labels"><strong>Registration Number</strong></label>
-                <input type="text" class="form-control" name="registration_number">
-                @if($errors->has('registration_number'))
-                    <span class="text-danger">{{ $errors->first('registration_number') }}</span>
-                @endif
-            </div>
+            
             <div class="col-sm-4">
                 <label class="labels"><strong>Chassis Number</strong></label>
-                <input type="text" class="form-control" name="chassis_number">
-                @if($errors->has('chassis_number'))
+                <input type="text" class="form-control disabled" name="chassis_number" value="{{ Auth::user()->chassis_number}}" required>
+               <!--  @if($errors->has('chassis_number'))
                     <span class="text-danger">{{ $errors->first('chassis_number') }}</span>
-                @endif
+                @endif -->
             </div>
             <div class="col-sm-4">
                 <label class="labels"><strong>Engine Number</strong></label>
-                <input type="text" class="form-control" name="engine_number">
+                <input type="text" class="form-control" name="engine_number" required>
                 @if($errors->has('engine_number'))
                     <span class="text-danger">{{ $errors->first('engine_number') }}</span>
                 @endif
             </div>
             <div class="col-sm-4">
                 <label class="labels"><strong>Fuel Type</strong></label>
-                <input type="text" class="form-control" name="fuel_type">
+                <input type="text" class="form-control" name="fuel_type" required>
                 @if($errors->has('fuel_type'))
                     <span class="text-danger">{{ $errors->first('fuel_type') }}</span>
                 @endif
             </div>
             <div class="col-sm-4">
                 <label class="labels"><strong>Model Name</strong></label>
-                <input type="text" class="form-control" name="model_name">
+                <input type="text" class="form-control" name="model_name" required>
                 @if($errors->has('model_name'))
                     <span class="text-danger">{{ $errors->first('model_name') }}</span>
                 @endif
             </div>
             <div class="col-sm-4">
                 <label class="labels"><strong>Color</strong></label>
-                <input type="text" class="form-control" name="color">
+                <input type="text" class="form-control" name="color" required>
                 @if($errors->has('color'))
                     <span class="text-danger">{{ $errors->first('color') }}</span>
                 @endif
@@ -152,6 +146,7 @@
             </div>
         </div>
         </form>
+        @endif
         <div class="container">
         <h3 class="mb-3 text-success text-center">Application List</h3>
           <table class="table">
@@ -160,8 +155,7 @@
                 <th>Scheme Name</th>
                 <th>Owner</th>
                 <th>Application Number</th>
-                <th>Vehical Name</th>
-                <th>Registration Number</th>
+                <th>Vehicle Number</th>
                 <th>Chassis Number</th>
                 <th>Engine Number</th>
                 <th>Fuel Type</th>
@@ -177,15 +171,15 @@
                 <td>{{$application->owner_name}}</td>
                 <td>{{$application->application_number}}</td>
                 <td>{{$application->vehical_name}}</td>
-                <td>{{$application->registration_number}}</td>
                 <td>{{$application->chassis_number}}</td>
                 <td>{{$application->engine_number}}</td>
                 <td>{{$application->fuel_type}}</td>
                 <td>{{$application->model_name}}</td>
                 <td>{{$application->color}}</td>
                 <!-- <td>{{$application->status}}</td> -->
-                <td><a href="" class="btn btn-warning"><i class="fa fa-edit" style="font-size:10px;color:red"></i>
-                </a></td>
+                <td>
+                <a href="{{}}" onclick="return confirm('Are you sure?')" class="delete btn btn-danger btn-sm">Delete</a>
+                </td>
               </tr>
               @endforeach
             </tbody>
@@ -197,6 +191,12 @@
 <!-- profile end -->
 </div>
         @include('layouts.footer')
+        <script>
+            $("#form-data").validate();
+        $('.numbersOnly').keyup(function() {
+            this.value = this.value.replace(/[^0-9\.]/g, '');
+        });
+        </script>
 </body>
 </html>
 @endsection

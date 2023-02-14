@@ -30,7 +30,10 @@ class BankDetailController extends Controller
             'account_number' => 'required',
             'branch_address' => 'required',
         ]);
-			$data = BankDetails::updateOrCreate([
+			$data = BankDetails::updateOrCreate(
+				[
+					'user_id' => $request->user_id,
+				],[
 					'user_id' => $request->user_id,
 					'bank_name' => $request->bank_name,
 					'district_name' => $request->district_name,
@@ -39,7 +42,8 @@ class BankDetailController extends Controller
 					'account_number' => $request->account_number,
 					'branch_address' => $request->branch_address,
 					'status' => 'pending'
-				]);
+				]
+			);
         return redirect('application-form')->with('success','Bank details added succesfully, please fill application form');
 	}
 }

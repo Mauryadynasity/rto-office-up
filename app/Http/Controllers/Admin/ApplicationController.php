@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Admin;
+use App\Models\User;
 use App\Models\Application;
 use Illuminate\Http\Request;
 use Validator;
@@ -21,9 +22,15 @@ class ApplicationController extends Controller {
 
 	public function index(Request $request) {
 		// dd($request->all());
-			$admin = Auth::guard('admin')->user();
 		if ($request->ajax()) {
-			$application = Application::where('deleted_at', null)->get();
+			$admin = Auth::guard('admin')->user();
+			// dd($admin);
+			if($admin->role ==2){
+			$userData = User::where('district',$admin->district_id)->first();
+			$application = Application::where('user_id',$userData->id)->where('status','approved')->get();
+		}else{
+			$application = Application::where('deleted_at',null)->get();
+		}
         return Datatables::of($application)->addIndexColumn()
             ->addColumn('action', function($row){
                 $actionBtn = '<a href="'.url("admin/application/".base64_encode($row->id)).'" class="edit btn btn-success btn-sm">Edit</a>
