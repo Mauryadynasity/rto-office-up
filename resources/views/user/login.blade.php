@@ -7,21 +7,29 @@
         <div class="alert alert-success validation_success" style="display: none;"></div>
         <div class="alert alert-danger validation_error" style="display: none;"></div>
         <div class="text-center mt-4 logHead">Login</div>
-            <form class="p-3 mt-3" enctype="multipart/form-data" method="POST" id="form-data" action="{{url('enquery-login')}}">
+            <form class="p-3 mt-3" enctype="multipart/form-data" method="POST" id="form-data" action="{{url('enquery-login')}}" autocomplete="off">
             @csrf
             <div class="form-field d-flex align-items-center">
-                <span class="far fa-user"></span>
-                <input type="text" name="vehicle_number" id="vehicle_number" placeholder="Vehicle Number">
+                <input type="text" name="vehicle_number" id="vehicle_number" placeholder="Vehicle Number" autocomplete="nope">
+            </div>
+            <div class="form-field d-flex align-items-center">
+            <div class="show_password">
+                <input type="password" name="password" id="password" placeholder="Enter Your Password" autocomplete="new-password">
+            </div>
             </div>
             <div class="send_otp" style="display: none;">
             <div class="form-field d-flex align-items-center">
                 <span class="fas fa-key"></span>
-                <input type="number" name="otp" id="otp" placeholder="OTP">
+                <input class="otp_login" type="number" name="otp" id="otp" placeholder="OTP">
             </div>
             </div>
             <button type="button" class="btn btn-success otp_btn mt-3">Sent OTP</button>
             <button type="button" class="btn btn-danger signIn mt-3" style="display: none;">Login</button>
         </form>
+        <div class="text-center fs-6">
+            <div style="cursor: pointer; color: #03A9F4;" class="login_password">Login with password</div>
+            <div class="login_otp" style="cursor: pointer; color: #03A9F4;" class="login_password">Login with OTP</div>
+        </div>
         <div class="text-center fs-6">
             <a href="{{url('forgot-password')}}">Forget password?</a> or <a href="{{url('register')}}">Sign up</a>
         </div>
@@ -33,6 +41,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script>
 $(document).ready(function() {
+        $('.show_password').hide();
+        $('.login_otp').hide();
     
 $('.otp_btn').click(function(){
   var vehicle_number = $('#vehicle_number').val();
@@ -88,5 +98,19 @@ $('.signIn').click(function(){
 	});
 });
 
+    $(".login_password").click(function() {
+        $(".login_password").hide();
+        $(".login_otp").show();
+        $(".show_password").show();
+        $(".send_otp").hide();
+    });
+    $(".login_otp").click(function() {
+        $(".show_password").hide();
+        $(".login_otp").hide();
+        $(".login_password").show();
+        $(".send_otp").hide();
+    });
 });
+
 </script>
+
