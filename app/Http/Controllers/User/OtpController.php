@@ -21,6 +21,15 @@ class OtpController extends Controller
 {
     use SmsTrait;
     public function otpSend(Request $request){
+		$validator = Validator::make($request->all(), [
+            'vehicle_number' => ['required', 'string'],
+		]); 
+
+        if ($validator->fails()) {
+            $error = $validator->errors()->first();
+            return response()->json(['message' => $error, 'status' => false]);
+			// return response()->json($validator->messages(), 200);
+		}
         $mobile = '7275638862';
         $mobile_four = substr($mobile,-4,4);
         $otp = rand(11111,999999);
@@ -39,6 +48,14 @@ class OtpController extends Controller
         return response()->json(['message' => 'OTP sent successfully on your registered mobile number ******'.$mobile_four, 'status' => true]);
     }
     public function otpSendLogin(Request $request){
+		$validator = Validator::make($request->all(), [
+            'vehicle_number' => ['required', 'string'],
+		]); 
+
+        if ($validator->fails()) {
+            $error = $validator->errors()->first();
+            return response()->json(['message' => $error, 'status' => false]);
+		}
         $user = User::where('vehicle_number',$request->vehicle_number)->first();
         if(!$user){
             return response()->json(['message' => 'Please Register First', 'status' => false]);

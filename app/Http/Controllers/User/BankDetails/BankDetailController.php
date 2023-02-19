@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User\BankDetails;
 
 use App\Http\Controllers\Controller;
+use App\Models\Application;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -18,8 +19,9 @@ use Illuminate\Support\Facades\Auth as FacadesAuth;
 class BankDetailController extends Controller
 {
     public function bankDetailForm(Request $request){
-    	$data['bankdetails'] = BankDetails::where('user_id',Auth::user()->id)->orderBy('id','DESC')->first();
-    	    return view('user.BankDetails.bank-details',$data);
+    	$bankdetails = BankDetails::where('user_id',Auth::user()->id)->orderBy('id','DESC')->first();
+    	$application = Application::where('user_id',Auth::user()->id)->orderBy('id','DESC')->first();
+		return view('user.BankDetails.bank-details',compact('bankdetails','application'));
     }
     public function saveBankDetails(Request $request){
     	$request->validate([

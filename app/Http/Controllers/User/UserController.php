@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Application;
 use App\Models\Admin\District;
 use Validator;
 use Auth;
@@ -17,8 +18,11 @@ use App\Jobs\TrackingEmailFrequency;
 use Spatie\MediaLibrary\Models\Media;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
 
+use App\Http\Traits\SmsTrait;
+
 class UserController extends Controller
 {
+    use SmsTrait;
     public function login(Request $request){
     	    return view('user.login');
     }
@@ -26,8 +30,9 @@ class UserController extends Controller
     	    return view('user.register');
     }
     public function dashboard(Request $request){
-    	$data['districts'] = District::all();
-    	    return view('user.dashboard',$data);
+    	$districts = District::all();
+    	$application = Application::where('user_id',Auth::user()->id)->orderBy('id','DESC')->first();
+		return view('user.dashboard',compact('districts','application'));
     }
     public function status(Request $request){
     	    return view('user.status');
@@ -68,7 +73,9 @@ class UserController extends Controller
 		]);
 
 		if($validator->fails()) {
-			return response()->json($validator->messages(), 200);
+            $error = $validator->errors()->first();
+            return response()->json(['message' => $error, 'status' => false]);
+			// return response()->json($validator->messages(), 200);
 		}
 
         $otp_details = $request->session()->get('otp_details');
@@ -79,18 +86,23 @@ class UserController extends Controller
 			return response()->json(['message' => 'Invalid OTP', 'status' => false]);
 		}
 
+		$password_text = 'rto@123';
+		$mobile  = '7275638862';
+        $mobile_four = substr($mobile,-4,4);
+		$otpMessage = "You have registered successfully.\n First time password is ".$password_text;
+		$registerMessage = "You have registered successfully. First time password is sent on your registered mobile number ******".$mobile_four;
+        $otpStatus = $this->otpSendFun($mobile,$otpMessage);
+		$password = \Hash::make($password_text);
+
 		$user = New User;
 		$user->full_name = 'Sunil';
-		// $user->first_name = 'Sunil';
-        // $user->last_name = 'Maurya';
-		// $user->user_name = 'SunilMaurya';
-		$user->mobile = '9999999999';
+		$user->mobile = $mobile;
 		$user->vehicle_number = $request->vehicle_number;
 		$user->chassis_number = $request->chassis_number;
-		$user->password = \Hash::make('rto@123');
-		$user->status = 'active';
+		$user->password = $password;
+		$user->status = 'inactive';
 		$user->save();
-		return response()->json(['message' => 'Register Successful', 'status' => true]);
+		return response()->json(['message' => $registerMessage, 'status' => true]);
 	}
 
 	public function enqueryLogin(Request $request){
@@ -114,27 +126,52 @@ class UserController extends Controller
 	}
 
 	public function enqueryLoginOtp(Request $request){
-		$validator = Validator::make($request->all(), [
-            'vehicle_number' => 'required',
-            'otp' => 'required',
-			// 'g-recaptcha-response' => 'required|captcha',
-		]);
+		if($request->otp){
+			$validator = Validator::make($request->all(), [
+				'vehicle_number' => 'required',
+				'otp' => 'required',
+			]);
+		}elseif($request->password){
+			$validator = Validator::make($request->all(), [
+				'vehicle_number' => 'required',
+				'password' => 'required',
+			]);
+		}else{
+			$validator = Validator::make($request->all(), [
+				'otp_or_password' => 'required',
+			]);
+		}
 
 		if($validator->fails()) {
-			return response()->json($validator->messages(), 200);
+            $error = $validator->errors()->first();
+            return response()->json(['message' => $error, 'status' => false]);
 		}
 
         $user = User::where('vehicle_number',$request->vehicle_number)->first();
         if(!$user){
             return response()->json(['message' => 'Please Register First', 'status' => false]);
         }
-		if($user->otp != $request->otp){
-            return response()->json(['message' => 'Invalid OTP', 'status' => false]);
+		if($request->otp){
+			if($user->otp != $request->otp){
+				return response()->json(['message' => 'Invalid OTP', 'status' => false]);
+			}
+			$user->otp = null;
+			$user->save();
+			Auth::loginUsingId($user->id);
+			return response()->json(['message' => 'Login Successful', 'status' => true]);
 		}
-        $user->otp = null;
-        $user->save();
-		Auth::loginUsingId($user->id);
-		return response()->json(['message' => 'Login Successful', 'status' => true]);
+		if($request->password){
+			$userdata = array(
+				'email' => $user->email,
+				'password' => $request->password
+			);
+			if (Auth::attempt($userdata)){
+				return response()->json(['message' => 'Login Successful', 'status' => true]);
+			}
+			else{
+				return response()->json(['message' => 'Wrong Password', 'status' => false]);
+			}
+		}
 	}
 	
 	public function uploadPhoto(Request $request){
@@ -144,6 +181,9 @@ class UserController extends Controller
 		if($userData->id){
 			if($request->photo){
 				$user->addMediaFromRequest('photo')->toMediaCollection('photo');
+			}
+			if($request->signature){
+				$user->addMediaFromRequest('signature')->toMediaCollection('signature');
 			}
 		}
 		return back()->with('success','Uploaded Successfully.');
@@ -171,5 +211,27 @@ class UserController extends Controller
 	    $request->session()->regenerateToken();
 	    return redirect('login');
 	}
+
+	public function changePassword(Request $request){
+		return view('user.change-password');
+	}
+	public function changePasswordSave(Request $request){
+		$request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required|confirmed',
+        ]);
+
+		#Match The Old Password
+        if(!Hash::check($request->old_password, auth()->user()->password)){
+            return back()->with("error", "Old Password Doesn't match!");
+        }
+        #Update the new Password
+        User::whereId(auth()->user()->id)->update([
+            'status' => 'active',
+            'password' => Hash::make($request->new_password)
+        ]);
+        return redirect('dashboard')->with("success", "Password changed successfully!");
+}
+
 }
 

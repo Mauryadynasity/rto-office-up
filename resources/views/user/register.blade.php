@@ -81,6 +81,7 @@ $(document).ready(function() {
 
 $('.otp_btn').click(function(){
   var vehicle_number = $('#vehicle_number').val();
+	$('.ajaxloader').show();
   $.ajax({
       url : "{{url('otp-send')}}",
       type : 'POST',
@@ -100,13 +101,18 @@ $('.otp_btn').click(function(){
           $('.signUp').hide();
           $('.send_otp').hide();
           $('.validation_success').text('').hide();
-          $('.validation_error').text(data.message).hide();
+          $('.validation_error').text(data.message).show();
         }
-      }
+        $('.ajaxloader').hide();
+      },
+      error: function (request, status, error) {
+      $('.ajaxloader').hide();
+		}
   });
 });
 $('.signUp').click(function(){
   $_token = "{{ csrf_token() }}";
+	$('.ajaxloader').show();
 	$.ajax({
 	    headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') },
 		type:'POST',
@@ -125,9 +131,11 @@ $('.signUp').click(function(){
           $('.validation_success').text('').hide();
           $('.validation_error').text(data.message).show();
 			}
+      $('.ajaxloader').hide();
 	   },
 		error: function (request, status, error) {
 			$('.login_login').text(error).css({'display':'block'});
+      $('.ajaxloader').hide();
 		}
 	});
 });

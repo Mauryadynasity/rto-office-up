@@ -18,6 +18,18 @@
     color: red;
     font-style: italic;
 }
+.ajaxloader{
+	position: fixed;
+    z-index: 99999;
+    height: 100%;
+    width: 100%;
+    background-color: rgb(14 13 13 / 30%);
+    top: 0px;
+	background-repeat: no-repeat;
+    background-position: center;
+    background-size: 300px;
+	background-image: url({{asset('assets/images/Ajux_loader.gif')}});
+}
 </style>
 
 </head>
@@ -93,7 +105,9 @@
         </div>
     </nav>
 </header>
+<div class="ajaxloader"></div>
      @yield('content')
+
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
 
@@ -103,7 +117,11 @@
     <script src="/assets/js/custom.js"></script>
     <script src="/assets/js/jquery.validate.js"></script>
 
-
+<script>
+$('document').ready(function(){
+	$('.ajaxloader').hide();
+});
+</script>
 <!-- <link rel="stylesheet" href="login.css"> -->
 </body>
 </html>

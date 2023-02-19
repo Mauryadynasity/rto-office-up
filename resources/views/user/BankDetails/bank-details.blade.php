@@ -119,7 +119,7 @@
             </div>
             <div class="col-sm-3">
                 <label class="labels"><strong></strong></label>
-                <button class="form-control btn btn-warning" name="submit_button" value="true" type="submit">Next</button>
+                <button class="form-control btn btn-warning submit_button" style="color:#ffffff;" name="submit_button" value="true" type="submit">Save & Next</button>
             </div>
         </div>
         </form>
@@ -134,9 +134,13 @@
     $("#form-data").validate();
     $('.numbersOnly').keyup(function() {
             this.value = this.value.replace(/[^0-9\.]/g, '');
-        });
+    });
+    @if($application)
+        $('input').prop('disabled',true);
+        $('.submit_button').prop('disabled',true);
+    @endif
 </script>
-        @include('layouts.footer')
+@include('layouts.footer')
 
 </body>
 </html>

@@ -40,6 +40,7 @@ class User extends Authenticatable implements HasMedia
     ];
     protected $appends = [
         'photo',
+        'signature',
     ];
 
     /**
@@ -65,9 +66,19 @@ class User extends Authenticatable implements HasMedia
             return $this->getMedia('photo')->first()->getFullUrl();
         }
     }
+    public function getSignatureAttribute()
+    {
+        if ($this->getMedia('signature')->isEmpty()) {
+            return false;
+        }else{
+            return $this->getMedia('signature')->first()->getFullUrl();
+        }
+    }
     public function registerMediaCollections()
     {
         $this->addMediaCollection('photo')
+            ->singleFile();
+            $this->addMediaCollection('signature')
             ->singleFile();
      }
 }

@@ -142,7 +142,7 @@
             </div>
             <div class="col-sm-3">
                 <label class="labels"><strong></strong></label>
-                <button class="form-control btn btn-warning" name="submit_button" value="true" type="submit">Next</button>
+                <button class="form-control btn btn-warning" name="submit_button" value="true" type="submit">Submit</button>
             </div>
         </div>
         </form>
@@ -161,7 +161,7 @@
                 <th>Fuel Type</th>
                 <th>Model Name</th>
                 <th>Color</th>
-                <th>Action</th>
+                <!-- <th>Action</th> -->
               </tr>
             </thead>
             <tbody>
@@ -177,9 +177,9 @@
                 <td>{{$application->model_name}}</td>
                 <td>{{$application->color}}</td>
                 <!-- <td>{{$application->status}}</td> -->
-                <td>
+                <!-- <td>
                 <a href="{{}}" onclick="return confirm('Are you sure?')" class="delete btn btn-danger btn-sm">Delete</a>
-                </td>
+                </td> -->
               </tr>
               @endforeach
             </tbody>

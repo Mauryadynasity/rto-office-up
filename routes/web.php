@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('user.index');
 });
-    Route::get('dashboard', 'App\Http\Controllers\User\UserController@dashboard');
     Route::get('login', 'App\Http\Controllers\User\UserController@login');
     Route::post('enquery-login', 'App\Http\Controllers\User\UserController@enqueryLogin');
     Route::post('enquery-login-otp', 'App\Http\Controllers\User\UserController@enqueryLoginOtp');
@@ -27,8 +26,17 @@ Route::get('/', function () {
     Route::post('send-password', 'App\Http\Controllers\User\UserController@sendPassword');
     Route::get('status', 'App\Http\Controllers\User\UserController@status');
     Route::post('user-registration', 'App\Http\Controllers\User\UserController@userRegistration');
-    Route::post('upload-photo', 'App\Http\Controllers\User\UserController@uploadPhoto');
-    Route::post('update-profile', 'App\Http\Controllers\User\UserController@updateProfile');
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('change-password', 'App\Http\Controllers\User\UserController@changePassword')->name('changePassword');
+    Route::post('change-password', 'App\Http\Controllers\User\UserController@changePasswordSave');
+    Route::group(['middleware' => 'userFirstLogin'], function () {
+            Route::get('dashboard', 'App\Http\Controllers\User\UserController@dashboard');
+            Route::post('upload-photo', 'App\Http\Controllers\User\UserController@uploadPhoto');
+            Route::post('update-profile', 'App\Http\Controllers\User\UserController@updateProfile');
+    });
+});
+
     
 
 // Bank details urls

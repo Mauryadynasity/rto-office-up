@@ -49,19 +49,37 @@
       <div class="card mb-4">
         <div class="card-body text-center">
           @if(Auth::user())
-          <img src="{{Auth::user()->photo}}" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+          <img src="{{Auth::user()->photo}}" alt="avatar" class="img-fluid" style="width: 150px;">
+          <br/>
+          <img src="{{Auth::user()->signature}}" alt="avatar" class="img-fluid" style="width: 150px;">
           @else
-          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+          <img src="{{asset('assets\images\demo-user.jpg')}}" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
           @endif
           <h5 class="my-3">@if(Auth::user()){{ Auth::user()->full_name }}@else 'N/A' @endif</h5>
           <!-- <p class="text-muted mb-1">Full Stack Developer</p> -->
           <!-- <p class="text-muted mb-4">Bay Area, San Francisco, CA</p> -->
-          <div class="d-flex justify-content-center mb-2">
+
+          <p>
+          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            Update Photo & Signature
+          </button>
+          </p>
+          <div class="collapse" id="collapseExample">
+            <div class="card card-body text-left">
+            <div class="col-md-12">
+            <label style="display:block;">Upload Photo</label>
             <input type="file" class="form-control" name="photo" accept="image/jpg,image/jpeg">&nbsp;
-            <button type="submit" class="btn btn-outline-primary ms-1">Upload</button>
-            <!-- <button type="button" class="btn btn-primary">Follow</button>
-            <button type="button" class="btn btn-outline-primary ms-1">Message</button> -->
+            </div>
+            <div class="col-md-12">
+              <label style="display:block;">Upload Signature</label>
+              <input type="file" class="form-control" name="signature" accept="image/jpg,image/jpeg">&nbsp;
+            </div>
+            <div class="col-md-12">
+              <button type="submit" class="btn btn-outline-primary ms-1">Upload</button>
+            </div>
+            </div>
           </div>
+
         </div>
       </div>
     </form>
@@ -132,7 +150,7 @@
           <hr>
           <div class="row">
             <div class="col-sm-3">
-              <button type="submit" class="text-muted mb-0 form-control btn btn-warning btn-navigate-form-step" name="submit_button" value="true" step_number="2">Update Profile</button>
+              <button type="submit" class="text-muted mb-0 form-control btn btn-warning btn-navigate-form-step update_profile" name="submit_button" value="true" style="color:#ffffff;" step_number="2">Update Profile</button>
             </div>
             <div class="col-sm-3">
               
@@ -215,6 +233,11 @@ document.querySelectorAll(".btn-navigate-form-step").forEach((formNavigationBtn)
         navigateToFormStep(stepNumber);
     });
 });
+@if($application)
+      $('input').prop('disabled',true);
+      $('.update_profile').prop('disabled',true);
+@endif
+
 </script>
 </body>
 </html>

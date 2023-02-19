@@ -99,15 +99,19 @@ $('.signIn').click(function(){
 });
 
     $(".login_password").click(function() {
-        $(".login_password").hide();
+        $('.signIn').show();
         $(".login_otp").show();
         $(".show_password").show();
+        $(".login_password").hide();
         $(".send_otp").hide();
+        $(".otp_btn").hide();
     });
     $(".login_otp").click(function() {
+        $(".login_password").show();
+        $(".otp_btn").show();
+        $('.signIn').hide();
         $(".show_password").hide();
         $(".login_otp").hide();
-        $(".login_password").show();
         $(".send_otp").hide();
     });
 });

@@ -21,7 +21,7 @@ class UserController extends Controller {
 	// Function for admin dashboard
 	public function dashboard() {
 		$data['admin'] = Auth::guard('admin');
-			return view('admin.dashboard')->with($data);
+		return view('admin.dashboard')->with($data);
 	}
 
 	public function index(Request $request) {
