@@ -75,7 +75,7 @@
               <input type="file" class="form-control" name="signature" accept="image/jpg,image/jpeg">&nbsp;
             </div>
             <div class="col-md-12">
-              <button type="submit" class="btn btn-outline-primary ms-1">Upload</button>
+              <button type="submit" class="btn btn-outline-primary ms-1 upload_photo">Upload</button>
             </div>
             </div>
           </div>
@@ -235,7 +235,7 @@ document.querySelectorAll(".btn-navigate-form-step").forEach((formNavigationBtn)
 });
 @if($application)
       $('input').prop('disabled',true);
-      $('.update_profile').prop('disabled',true);
+      $('.update_profile,.upload_photo').prop('disabled',true);
 @endif
 
 </script>
