@@ -26,7 +26,9 @@ class CreateApplicationTable extends Migration
             $table->string('fuel_type', 99)->nullable();
             $table->string('model_name', 99)->nullable();
             $table->string('color', 99)->nullable();
-            $table->enum('status', ['active', 'inactive','pending','approved','rejected'])->default('inactive');
+            $table->bigInteger('rto_status')->default(1);
+            $table->bigInteger('ho1_status')->default(1);
+            $table->bigInteger('ho2_status')->default(1);
             $table->timestamps();
             $table->softDeletes();
         });

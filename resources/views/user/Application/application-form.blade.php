@@ -161,6 +161,9 @@
                 <th>Fuel Type</th>
                 <th>Model Name</th>
                 <th>Color</th>
+                <th>RTO Status</th>
+                <th>HO1 Status</th>
+                <th>HO2 Status</th>
                 <!-- <th>Action</th> -->
               </tr>
             </thead>
@@ -176,6 +179,9 @@
                 <td>{{$application->fuel_type}}</td>
                 <td>{{$application->model_name}}</td>
                 <td>{{$application->color}}</td>
+                <td>{{$application->rto_status_text}}</td>
+                <td>{{$application->ho1_status_text}}</td>
+                <td>{{$application->ho2_status_text}}</td>
                 <!-- <td>{{$application->status}}</td> -->
                 <!-- <td>
                 <a href="{{}}" onclick="return confirm('Are you sure?')" class="delete btn btn-danger btn-sm">Delete</a>

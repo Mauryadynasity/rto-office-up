@@ -41,15 +41,47 @@ class Application extends Model implements HasMedia
         'fuel_type',
         'model_name',
         'color',
-        'status',
+        'rto_status',
+        'ho1_status',
+        'ho2_status',
         'created_at',
         'updated_at',
         'deleted_at'
     ];
     protected $appends = [
         'upload_file',
+        'rto_status_text',
+        'ho1_status_text',
+        'ho2_status_text',
     ];
 
+    public function getRtoStatusTextAttribute()
+    {
+        $status = StatusMaster::find($this->rto_status);
+        if($status){
+            return $status->status_name;
+        }else{
+            return '';
+        }
+    }
+    public function getHo1StatusTextAttribute()
+    {
+        $status = StatusMaster::find($this->ho1_status);
+        if($status){
+            return $status->status_name;
+        }else{
+            return '';
+        }
+    }
+    public function getHo2StatusTextAttribute()
+    {
+        $status = StatusMaster::find($this->ho2_status);
+        if($status){
+            return $status->status_name;
+        }else{
+            return '';
+        }
+    }
     public function getUploadFileAttribute()
     {
         if ($this->getMedia('upload_file')->isEmpty()) {
