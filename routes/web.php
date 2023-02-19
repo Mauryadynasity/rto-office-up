@@ -34,18 +34,19 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('dashboard', 'App\Http\Controllers\User\UserController@dashboard');
             Route::post('upload-photo', 'App\Http\Controllers\User\UserController@uploadPhoto');
             Route::post('update-profile', 'App\Http\Controllers\User\UserController@updateProfile');
+
+            Route::get('bank-detail', 'App\Http\Controllers\User\BankDetails\BankDetailController@bankDetailForm');
+            Route::post('save-bank-details', 'App\Http\Controllers\User\BankDetails\BankDetailController@saveBankDetails');
+        
+        // Application form urls
+            Route::get('application-form', 'App\Http\Controllers\User\Application\ApplicationController@applicationForm');
+            Route::post('save-application-form','App\Http\Controllers\User\Application\ApplicationController@saveApplicationForm');
     });
 });
 
     
 
 // Bank details urls
-    Route::get('bank-detail', 'App\Http\Controllers\User\BankDetails\BankDetailController@bankDetailForm');
-    Route::post('save-bank-details', 'App\Http\Controllers\User\BankDetails\BankDetailController@saveBankDetails');
-
-// Application form urls
-    Route::get('application-form', 'App\Http\Controllers\User\Application\ApplicationController@applicationForm');
-    Route::post('save-application-form','App\Http\Controllers\User\Application\ApplicationController@saveApplicationForm');
 
 
 // OTR Related Routes
