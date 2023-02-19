@@ -86,6 +86,7 @@ class UserController extends Controller
 			return response()->json(['message' => 'Invalid OTP', 'status' => false]);
 		}
 
+		$email = $request->vehicle_number.'@gmail.com';
 		$password_text = 'rto@123';
 		$mobile  = '7275638862';
         $mobile_four = substr($mobile,-4,4);
@@ -97,6 +98,7 @@ class UserController extends Controller
 		$user = New User;
 		$user->full_name = 'Sunil';
 		$user->mobile = $mobile;
+		$user->email = $email;
 		$user->vehicle_number = $request->vehicle_number;
 		$user->chassis_number = $request->chassis_number;
 		$user->password = $password;

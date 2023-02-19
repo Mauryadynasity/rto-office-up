@@ -7,6 +7,7 @@ use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Application;
+use App\Models\BankDetails;
 use Validator;
 use Auth;
 use DB;
@@ -18,8 +19,17 @@ use Illuminate\Support\Facades\Auth as FacadesAuth;
 class ApplicationController extends Controller
 {
     public function applicationForm(Request $request){
-        $data['applications'] = Application::where('user_id',Auth::user()->id)->get();
-    	    return view('user.Application.application-form',$data);
+		if(Auth::user()->district == null  || Auth::user()->district < 1){
+			return redirect('dashboard');
+		}
+
+        $bankdetail = BankDetails::where('user_id',Auth::user()->id)->orderBy('id','DESC')->first();
+		if(!$bankdetail){
+			return redirect('bank-detail');
+		}
+
+        $applications = Application::where('user_id',Auth::user()->id)->get();
+        return view('user.Application.application-form',compact('applications'));
     }
     public function saveApplicationForm(Request $request){
         // dd($request->all());

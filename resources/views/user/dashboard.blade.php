@@ -48,7 +48,7 @@
         @csrf
       <div class="card mb-4">
         <div class="card-body text-center">
-          @if(Auth::user())
+          @if(Auth::user()->photo)
           <img src="{{Auth::user()->photo}}" alt="avatar" class="img-fluid" style="width: 150px;">
           <br/>
           <img src="{{Auth::user()->signature}}" alt="avatar" class="img-fluid" style="width: 150px;">

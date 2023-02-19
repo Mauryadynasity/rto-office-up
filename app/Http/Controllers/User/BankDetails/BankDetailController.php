@@ -19,6 +19,9 @@ use Illuminate\Support\Facades\Auth as FacadesAuth;
 class BankDetailController extends Controller
 {
     public function bankDetailForm(Request $request){
+		if(Auth::user()->district == null  || Auth::user()->district < 1){
+			return redirect('dashboard');
+		}
     	$bankdetails = BankDetails::where('user_id',Auth::user()->id)->orderBy('id','DESC')->first();
     	$application = Application::where('user_id',Auth::user()->id)->orderBy('id','DESC')->first();
 		return view('user.BankDetails.bank-details',compact('bankdetails','application'));
