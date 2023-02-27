@@ -164,6 +164,7 @@
                 <th>RTO Status</th>
                 <th>HO1 Status</th>
                 <th>HO2 Status</th>
+                <th>Resion for Rejection</th>
                 <!-- <th>Action</th> -->
               </tr>
             </thead>
@@ -182,7 +183,7 @@
                 <td>{{$application->rto_status_text}}</td>
                 <td>{{$application->ho1_status_text}}</td>
                 <td>{{$application->ho2_status_text}}</td>
-                <!-- <td>{{$application->status}}</td> -->
+                <td><img src="{{ url($application->upload_file) }}" alt="tag"></td>
                 <!-- <td>
                 <a href="{{}}" onclick="return confirm('Are you sure?')" class="delete btn btn-danger btn-sm">Delete</a>
                 </td> -->

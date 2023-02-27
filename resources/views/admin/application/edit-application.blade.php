@@ -120,20 +120,53 @@
             </div>
           </div>
           <br>
+          @if(Auth::guard('admin')->user()->role==1 || Auth::guard('admin')->user()->role==2)
           <div class="form-row" id="doc_status">
               <div class="col-md-2">
                 <b>Status </b>
               </div>
               <div class="col-md-4">
-                <select name="status" id="change-status" class="form-control">
-                <option value="active" {{$users->status=='active' ? 'selected': ''}}>Active</option> 
-               <option value="inactive" {{$users->status =='inactive' ? 'selected': ''}} >inactive</option> 
-               <option value="pending" {{$users->status =='pending' ? 'selected': ''}} >pending</option> 
-               <option value="rejected" {{$users->status =='rejected' ? 'selected': ''}} >rejected</option> 
-               <option value="approved" {{$users->status =='approved' ? 'selected': ''}} >approved</option> 
+                <select name="rto_status" id="change-status" class="form-control">
+               <option value="">---Select---</option> 
+               @foreach($statusMaster as $status)
+               <option value="{{$status->id}}">{{$status->status_name}}</option> 
+               <!-- <option value="approved" {{$users->status =='approved' ? 'selected': ''}} >approved</option>  -->
+               @endforeach
                 </select>
               </div>
           </div><br>
+          @elseif(Auth::guard('admin')->user()->role==3)
+          <div class="form-row" id="doc_status">
+              <div class="col-md-2">
+                <b>Status </b>
+              </div>
+              <div class="col-md-4">
+                <select name="ho1_status" id="change-status" class="form-control">
+               <option value="">---Select---</option> 
+               @foreach($statusMaster as $status)
+               <option value="{{$status->id}}">{{$status->status_name}}</option> 
+               <!-- <option value="approved" {{$users->status =='approved' ? 'selected': ''}} >approved</option>  -->
+               @endforeach
+                </select>
+              </div>
+          </div><br>
+          @elseif(Auth::guard('admin')->user()->role==4)
+          <div class="form-row" id="doc_status">
+              <div class="col-md-2">
+                <b>Status </b>
+              </div>
+              <div class="col-md-4">
+                <select name="ho2_status" id="change-status" class="form-control">
+               <option value="">---Select---</option> 
+               @foreach($statusMaster as $status)
+               <option value="{{$status->id}}">{{$status->status_name}}</option> 
+               <!-- <option value="approved" {{$users->status =='approved' ? 'selected': ''}} >approved</option>  -->
+               @endforeach
+                </select>
+              </div>
+          </div><br>
+          @endif
+
           <div class="form-row" id="uploadfile">
               <div class="col-md-2">
                 <b>Reason for Rejection </b>

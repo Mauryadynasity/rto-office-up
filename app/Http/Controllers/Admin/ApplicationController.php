@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Admin;
 use App\Models\User;
 use App\Models\Application;
+use App\Models\StatusMaster;
 use Illuminate\Http\Request;
 use Validator;
 use Auth;
@@ -18,16 +19,15 @@ class ApplicationController extends Controller {
 
 		// $this->middleware('auth:admin');
 	}
-	// Function for admin dashboard
 
 	public function index(Request $request) {
 		// dd($request->all());
 		if ($request->ajax()) {
 			$admin = Auth::guard('admin')->user();
 			// dd($admin);
-			if($admin->role ==2){
+			if($admin->role ==2 || $admin->role ==3 || $admin->role ==4){
 			$userData = User::where('district',$admin->district_id)->first();
-			$application = Application::where('user_id',$userData->id)->where('status','approved')->get();
+			$application = Application::where('user_id',$userData->id)->get();
 		}else{
 			$application = Application::where('deleted_at',null)->get();
 		}
@@ -68,10 +68,12 @@ class ApplicationController extends Controller {
 	}
 
 	public function show($id){
-		$data['users']=Application::where('id',base64_decode($id))->first();
+		$data['users'] = Application::where('id',base64_decode($id))->first();
+		$data['statusMaster'] = StatusMaster::all();
 			return view('admin.application.edit-application', $data);
 	}
 	public function update(Request $request,$id){
+		// dd($request->all());
 		$applicationData = Application::find($id);
 		$applicationData->save();
 		if($applicationData->id){

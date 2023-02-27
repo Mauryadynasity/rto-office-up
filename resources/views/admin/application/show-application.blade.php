@@ -53,7 +53,6 @@
                     <th>Fuel Type</th> 
                     <th>Model Name</th> 
                     <th>Color</th> 
-                    <th>Status</th> 
                    <th ><center>Action</center></th>
                   </tr>
                 </thead>
@@ -92,7 +91,6 @@
             {data: 'fuel_type', name: 'fuel_type'},
             {data: 'model_name', name: 'model_name'},
             {data: 'color', name: 'color'},
-            {data: 'status', name: 'status'},
             {
                 data: 'action', 
                 name: 'action', 

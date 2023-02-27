@@ -24,6 +24,7 @@
                         <option value="1">Admin</option>
                         <option value="2">RTO</option>
                         <option value="3">HO</option>
+                        <option value="4">HO Officer</option>
                       </select>
                 @if($errors->has('admin_type'))
                     <span class="text-danger">{{ $errors->first('admin_type') }}</span>

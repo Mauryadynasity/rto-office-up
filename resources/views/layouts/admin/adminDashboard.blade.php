@@ -112,9 +112,9 @@
                   <div class="image">
                      <!-- <img src="{{asset('img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image"> -->
                   </div>
-                  <!-- <div class="info">
-                     <a href="{{url('admin/dashboard')}}" class="d-block">Admin Dashboard</a>
-                  </div> -->
+                  <div class="info">
+                     <a href="#" class="d-block"><strong>{{Auth::guard('admin')->user()->name}}</strong></a>
+                  </div>
                </div>
                <!-- Sidebar Menu -->
                <nav class="mt-2">
@@ -163,7 +163,7 @@
                      </li>
                   </ul>
                </nav>
-         @elseif(Auth::guard('admin')->user()->role==2)
+         @elseif(Auth::guard('admin')->user()->role==2 || Auth::guard('admin')->user()->role==3 || Auth::guard('admin')->user()->role==4)
                <nav class="mt-2">
                   <ul class="nav nav-pills nav-sidebar flex-column menu-active" data-widget="treeview" role="menu" data-accordion="false">
                      <li class="nav-item has-treeview menu-open">
@@ -178,23 +178,7 @@
                         </ul>
                      </li>
                   </ul>
-               </nav>
-         @elseif(Auth::guard('admin')->user()->role==3)
-               <nav class="mt-2">
-                  <ul class="nav nav-pills nav-sidebar flex-column menu-active" data-widget="treeview" role="menu" data-accordion="false">
-                     <li class="nav-item has-treeview menu-open">
-                        <ul class="nav nav-treeview">
-                           <li class="nav-item">
-                              <a class="nav-link {{Request::is('admin/application') ? 'active' : ''}}" href="{{url('admin/application')}}">
-                                <i class="fas fa-file-alt" aria-hidden="true"></i>
-                                 <span>Application List</span>
-                              </a>
-                           </li>
-                           
-                        </ul>
-                     </li>
-                  </ul>
-               </nav>      
+               </nav>     
          @endif
                <!-- <nav class="mt-2">
                   <ul class="nav nav-pills nav-sidebar flex-column menu-active" data-widget="treeview" role="menu" data-accordion="false">
