@@ -25,11 +25,11 @@ class ApplicationController extends Controller {
 		if ($request->ajax()) {
 			$admin = Auth::guard('admin')->user();
 			// dd($admin);
-			if($admin->role ==2 || $admin->role ==3 || $admin->role ==4){
+		if($admin->role ==2){
 			$userData = User::where('district',$admin->district_id)->first();
 			$application = Application::where('user_id',$userData->id)->get();
 		}else{
-			$application = Application::where('deleted_at',null)->get();
+			$application = Application::get();
 		}
         return Datatables::of($application)->addIndexColumn()
             ->addColumn('action', function($row){
