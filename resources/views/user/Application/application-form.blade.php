@@ -8,6 +8,11 @@
     <script src="/assets/js/bootstrap.min.js"></script>
     <script src="/assets/js/custom.js"></script>
     <script src="/assets/js/jquery.validate.js"></script>
+    <style>
+        .show_applications th{
+            width:300px;
+        }
+    </style>
 <div class="container page_content" style="min-height: 500px;padding-top: 30px;padding-bottom: 30px;">
 <!-- profile start -->
 <div class="row">
@@ -60,9 +65,10 @@
     </div>
 </div>
 <!-- multi step form end -->
-      <div class="card mb-4">
+@if($applications->count() ==0)
+      <div class="col-md-12">
+      <div class="card">
         <div class="card-body">
-            @if($applications->count() ==0)
         <h3 class="mb-3 text-success">Fill Application Details</h3>
         <form enctype="multipart/form-data" method="POST" id="form-data" action="{{url('save-application-form')}}">
         @csrf
@@ -146,55 +152,88 @@
             </div>
         </div>
         </form>
-        @endif
+      </div>
+      </div>
+      </div>
+      @else
+      
+      <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
         <div class="container">
         <h3 class="mb-3 text-success text-center">Application List</h3>
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Scheme Name</th>
-                <th>Owner</th>
-                <th>Application Number</th>
-                <th>Vehicle Number</th>
-                <th>Chassis Number</th>
-                <th>Engine Number</th>
-                <th>Fuel Type</th>
-                <th>Model Name</th>
-                <th>Color</th>
-                <th>RTO Status</th>
-                <th>HO1 Status</th>
-                <th>HO2 Status</th>
-                <th>Resion for Rejection</th>
-                <!-- <th>Action</th> -->
-              </tr>
-            </thead>
+          <table class="table show_applications" style="width: 100%;">
             <tbody>
             @foreach($applications as $application)
-              <tr>
+                <tr>
+                  <th>Scheme Name</th>
                   <td>{{$application->scheme_id}}</td>
+                </tr>
+                <tr>
+                  <th>Owner</th>
                 <td>{{$application->owner_name}}</td>
+            </tr>
+            <tr>
+                <th>Application Number</th>
                 <td>{{$application->application_number}}</td>
+            </tr>
+            <tr>
+                <th>Vehicle Number</th>
                 <td>{{$application->vehical_name}}</td>
+            </tr>
+            <tr>
+                <th>Chassis Number</th>
                 <td>{{$application->chassis_number}}</td>
+            </tr>
+            <tr>
+                <th>Engine Number</th>
                 <td>{{$application->engine_number}}</td>
+            </tr>
+            <tr>
+                <th>Fuel Type</th>
                 <td>{{$application->fuel_type}}</td>
+            </tr>
+            <tr>
+                <th>Model Name</th>
                 <td>{{$application->model_name}}</td>
+            </tr>
+            <tr>
+                <th>Color</th>
                 <td>{{$application->color}}</td>
+            </tr>
+            <tr>
+                <th>RTO Status</th>
                 <td>{{$application->rto_status_text}}</td>
+            </tr>
+            <tr>
+                <th>HO1 Status</th>
                 <td>{{$application->ho1_status_text}}</td>
+            </tr>
+            <tr>
+                <th>HO2 Status</th>
                 <td>{{$application->ho2_status_text}}</td>
+            </tr>
+            @if($application->upload_file)
+            <tr>
+                <th>Resion for Rejection</th>
                 <td><img src="{{ url($application->upload_file) }}" alt="tag"></td>
                 <!-- <td>
                 <a href="{{}}" onclick="return confirm('Are you sure?')" class="delete btn btn-danger btn-sm">Delete</a>
                 </td> -->
-              </tr>
-              @endforeach
+            </tr>
+            @endif
+            @endforeach
             </tbody>
           </table>
         </div>
       </div>
     </div>
-  </div>
+    </div>
+
+    @endif
+
+
+</div>
 <!-- profile end -->
 </div>
         @include('layouts.footer')

@@ -45,6 +45,7 @@ $(document).ready(function() {
         $('.login_otp').hide();
     
 $('.otp_btn').click(function(){
+  $('.ajaxloader').show();
   var vehicle_number = $('#vehicle_number').val();
   $.ajax({
       url : "{{url('otp-send-login')}}",
@@ -67,11 +68,13 @@ $('.otp_btn').click(function(){
           $('.validation_success').text('').hide();
           $('.validation_error').text(data.message).show();
         }
+        $('.ajaxloader').hide();
       }
   });
 });
 
 $('.signIn').click(function(){
+	$('.ajaxloader').show();
   $_token = "{{ csrf_token() }}";
 	$.ajax({
 	    headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') },
@@ -91,8 +94,10 @@ $('.signIn').click(function(){
           $('.validation_success').text('').hide();
           $('.validation_error').text(data.message).show();
 			}
+      $('.ajaxloader').hide();
 	   },
 		error: function (request, status, error) {
+      $('.ajaxloader').hide();
 			$('.login_login').text(error).css({'display':'block'});
 		}
 	});
